@@ -4,15 +4,18 @@ import { faTwitter, faFacebook, faQuora } from '@fortawesome/free-brands-svg-ico
 
 function Navbar() {
     return (
-        <nav className="border-red-500">
-            <ul className="flex justify-start gap-10 p-5 text-sm border-2">
-                <li className='ml-[20%]'><a href="/">Home</a></li>
-                <li><a href="/post">Post</a></li>
-                <li><a href="/about">About</a></li>
-                <li className='mr-[30%]'><a href="/contact">Contact</a></li>
+        <nav className="border-2 border-b w-full">
+            <ul className="flex flex-col sm:flex-row justify-start gap-3 p-5 text-sm ">
+            
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <li className='sm:ml-10'><a href="/">Home</a></li>
+                    <li><a href="/post">Post</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </div>
 
                 {/* Social media icons */}
-                <div className="flex space-x-10">
+                <div className="flex flex-col sm:flex-row sm:ml-auto gap-4 sm:space-x-10">
                     <li>
                         <a
                             href="https://twitter.com"

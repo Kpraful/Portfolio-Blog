@@ -1,10 +1,21 @@
 import React from 'react'
 
-function Middle() {
+function Middle({img, title, content}) {
     return (
         <div className='m-auto flex justify-center items-center'>
             <div className='mt-4'>
-                <img src="https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/cheerful-loving-couple-bakers-drinking-coffee-PCAVA6B-2.jpg" className='w-[60vw] h-[60vh] rounded-lg' alt="" srcset="" />
+                <div className='m-auto w-[80%]'>
+                    <img src={img} className='rounded-lg object-cover h-auto w-full' alt="" srcset="" />
+                    {/* https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/cheerful-loving-couple-bakers-drinking-coffee-PCAVA6B-2.jpg */}
+                </div>
+                <div className='m-auto mt-4 w-[70%] text-left'>
+
+                    <h1 className="font-bold text-3xl">{title}</h1>
+
+                    <div className='h-52 overflow-ellipsis overflow-hidden '>
+                        <p className='overflow-hidden text-ellipsis line-clamp-4'>{content}</p>
+                    </div>
+                </div>
             </div>
         </div>
     )
