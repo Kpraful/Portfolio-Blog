@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Middle({img, title, content}) {
+function Middle({ img, title, content }) {
     return (
         <div className='m-auto flex justify-center items-center'>
             <div className='mt-4'>
@@ -12,8 +12,11 @@ function Middle({img, title, content}) {
 
                     <h1 className="font-bold text-3xl">{title}</h1>
 
-                    <div className='h-52 overflow-ellipsis overflow-hidden '>
+                    <div className='h-32 overflow-ellipsis overflow-hidden '>
                         <p className='overflow-hidden text-ellipsis line-clamp-4'>{content}</p>
+                    </div>
+                    <div className='mb-8'>
+                        <a className='mt-4 bg-white text-black border  hover:bg-orange-600 border-orange-600 cursor-pointer py-2 px-4 rounded-lg'>Read More</a>
                     </div>
                 </div>
             </div>
