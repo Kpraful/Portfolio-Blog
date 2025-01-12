@@ -3,24 +3,80 @@ import Footer from './components/Footer';
 import Logo from './components/Logo';
 import Middle from './components/Middle';
 import Navbar from './components/Navbar';
-const imgArr = ['https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/cheerful-loving-couple-bakers-drinking-coffee-PCAVA6B-2.jpg','https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/loft-office-with-vintage-decor-PFD2JSL-1.jpg','https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/yellow-and-gray-industrial-office-PFDQ5CR-1.jpg'];
+import Lottie from 'react-lottie';
+import { faker } from '@faker-js/faker';
+import { useEffect, useState } from 'react';
+import animationData from "../src/Animations/lotte.json";
 
-const titleArr = ['The Best Coffee in Town','The Best Office in Town','The Best Office in Town'];
+// function getImageArray() {
+//   fetch('')
+// }
 
-const contentArr = ['Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risuseget risus', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risusLorem ipsum dolor sit amet'];
+async function resultArray(params) {
+  let arr = {};
+  const title = Array.from({ length: params }, () => faker.lorem.sentence());
+  const content = Array.from({ length: params }, () => faker.lorem.paragraph());
+  const imgPromises = Array.from({ length: params }, async () => {
+    const response = await fetch('https://picsum.photos/800/600');
+    return response.url; // Return the URL of the fetched image
+  });
+
+  const img = await Promise.all(imgPromises);
+
+  arr["img"] = img;
+  arr["content"] = content;
+  arr["title"] = title;
+  return arr;
+  // const img = await fetch('https://source.unsplash.com/random/800x600');
+}
 
 function App() {
+
+  const [title, setTitle] = useState([]);
+  const [content, setContent] = useState([]);
+  const [img, setImg] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true, 
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await resultArray(10);
+      console.log("Data is ", data);
+      setTitle(data.title);
+      setContent(data.content);
+      setImg(data.img);
+      setLoading(false);
+    }
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="loading-screen bg-black h-[100vh] w-[100vw]">
+        <Lottie options={defaultOptions} height={200} width={200} />
+      </div>
+    )
+  }
+
   return (
     <>
-      <Navbar/>
-      <Logo/>
+      <Navbar />
+      <Logo />
       {
-        imgArr.map((img, index) => {
-          return <Middle img={img} title={titleArr[index]} content={contentArr[index]}/>
+        title.map((data, index) => {
+          return <Middle img={img[index]} title={title[index]} content={content[index]} />
         })
       }
-      <Footer/>
-      </>
+      <Footer />
+    </>
   );
 }
 

@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faFacebook, faQuora } from '@fortawesome/free-brands-svg-icons';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 function Navbar() {
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => setIsOpen(!isOpen);
+
+
     return (
         <nav className="border-2 border-b w-full">
-            <ul className="flex flex-col sm:flex-row justify-start gap-3 p-5 text-sm ">
-            
+            <div className="flex justify-between items-center p-5 sm:hidden ">
+                <button onClick={toggleMenu} className="sm:hidden">
+                    <FontAwesomeIcon icon={isOpen ? faTimes : faBars} size="lg" />
+                </button>
+            </div>
+
+            <ul className={`flex flex-col sm:flex-row justify-start gap-3 p-5 text-sm ${isOpen ? "block":"hidden sm:flex"}`}>
+
                 <div className="flex flex-col sm:flex-row gap-4">
                     <li className='sm:ml-10'><a href="/">Home</a></li>
                     <li><a href="/post">Post</a></li>

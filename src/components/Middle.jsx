@@ -1,9 +1,10 @@
 import React from 'react'
 
 function Middle({ img, title, content }) {
+    console.log("Image is ", img);
     return (
-        <div className='m-auto flex justify-center items-center'>
-            <div className='mt-4'>
+        <div className='m-auto flex justify-center items-center w-[80%]'>
+            <div className='mt-4 w-full h-full'>
                 <div className='m-auto w-[80%]'>
                     <img src={img} className='rounded-lg object-cover h-auto w-full' alt="" srcset="" />
                     {/* https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/cheerful-loving-couple-bakers-drinking-coffee-PCAVA6B-2.jpg */}
