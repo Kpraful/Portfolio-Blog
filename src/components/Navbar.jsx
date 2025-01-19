@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faFacebook, faQuora } from '@fortawesome/free-brands-svg-icons';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-
+import { Link, NavLink } from 'react-router-dom';
 function Navbar() {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +21,7 @@ function Navbar() {
             <ul className={`flex flex-col sm:flex-row justify-start gap-3 p-5 text-sm ${isOpen ? "block":"hidden sm:flex"}`}>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                    <li className='sm:ml-10'><a href="/">Home</a></li>
+                    <li className='sm:ml-10'><NavLink to="/home">Home</NavLink></li>
                     <li><a href="/post">Post</a></li>
                     <li><a href="/about">About</a></li>
                     <li><a href="/contact">Contact</a></li>

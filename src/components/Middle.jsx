@@ -1,7 +1,10 @@
-import React from 'react'
+import React,{useContext} from 'react'
+import { Link, NavLink } from 'react-router-dom';
+import { dataContext } from '../context/context'; // Import the context
 
-function Middle({ img, title, content }) {
-    console.log("Image is ", img);
+function Middle({ img, title, content, id }) {
+    const data = useContext(dataContext); // Access the context
+    console.log(data);
     return (
         <div className='m-auto flex justify-center items-center w-[80%]'>
             <div className='mt-4 w-full h-full'>
@@ -17,7 +20,7 @@ function Middle({ img, title, content }) {
                         <p className='overflow-hidden text-ellipsis line-clamp-4'>{content}</p>
                     </div>
                     <div className='mb-8'>
-                        <a className='mt-4 bg-white text-black border  hover:bg-orange-600 border-orange-600 cursor-pointer py-2 px-4 rounded-lg'>Read More</a>
+                        <NavLink className='mt-4 bg-white text-black border  hover:bg-orange-600 border-orange-600 cursor-pointer py-2 px-4 rounded-lg' to={`/detail`}>Read More</NavLink>
                     </div>
                 </div>
             </div>

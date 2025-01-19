@@ -4,8 +4,10 @@ import Logo from './components/Logo';
 import Middle from './components/Middle';
 import Navbar from './components/Navbar';
 import Lottie from 'react-lottie';
+import Home from './components/Home';
 import { faker } from '@faker-js/faker';
 import { useEffect, useState } from 'react';
+import { dataContext } from './context/context';
 import animationData from "../src/Animations/lotte.json";
 
 // function getImageArray() {
@@ -32,10 +34,12 @@ async function resultArray(params) {
 
 function App() {
 
+ 
   const [title, setTitle] = useState([]);
   const [content, setContent] = useState([]);
   const [img, setImg] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [index, setIndex] = useState([]);
 
   const defaultOptions = {
     loop: true,
@@ -49,7 +53,8 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       const data = await resultArray(10);
-      console.log("Data is ", data);
+      // console.log("Data is ", data);
+      setIndex(Array.from({ length: 10 }, (_, i) => i));
       setTitle(data.title);
       setContent(data.content);
       setImg(data.img);
@@ -68,14 +73,16 @@ function App() {
 
   return (
     <>
+    <dataContext.Provider value={{img, title, content, index}}>
       <Navbar />
       <Logo />
       {
         title.map((data, index) => {
-          return <Middle img={img[index]} title={title[index]} content={content[index]} />
+          return <Middle key={index} id={index} img={img[index]} title={title[index]} content={content[index]} />
         })
       }
       <Footer />
+    </dataContext.Provider>
     </>
   );
 }
