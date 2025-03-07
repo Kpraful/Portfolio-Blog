@@ -16,19 +16,13 @@ import animationData from "../src/Animations/lotte.json";
 
 async function resultArray(params) {
   let arr = {};
-  const title = Array.from({ length: params }, () => faker.lorem.sentence());
-  const content = Array.from({ length: params }, () => faker.lorem.paragraph());
-  const imgPromises = Array.from({ length: params }, async () => {
-    const response = await fetch('https://picsum.photos/800/600');
-    return response.url; // Return the URL of the fetched image
-  });
+  // const title = Array.from({ length: params }, () => faker.lorem.sentence());
+  // const content = Array.from({ length: params }, () => faker.lorem.paragraph());
+ 
 
-  const img = await Promise.all(imgPromises);
-
-  arr["img"] = img;
-  arr["content"] = content;
-  arr["title"] = title;
-  return arr;
+  const listPromise = await fetch('http://127.0.0.1:8000/blog/get/');
+  const data = await listPromise.json();
+  return data;
   // const img = await fetch('https://source.unsplash.com/random/800x600');
 }
 
@@ -54,10 +48,22 @@ function App() {
     async function fetchData() {
       const data = await resultArray(10);
       // console.log("Data is ", data);
-      setIndex(Array.from({ length: 10 }, (_, i) => i));
-      setTitle(data.title);
-      setContent(data.content);
-      setImg(data.img);
+      let title=[];
+      let content=[];
+      let images=[];
+      let index=[];
+      data.forEach((d)=>{
+        title.push(d.title);
+        content.push(d.content);
+        images.push("http://127.0.0.1:8000"+d.image);
+        index.push(d.id);
+      })
+           
+      // setIndex(Array.from({ length: 10 }, (_, i) => i));
+      setTitle(title);
+      setContent(content);
+      setImg(images);
+      setIndex(index);
       setLoading(false);
     }
     fetchData();
